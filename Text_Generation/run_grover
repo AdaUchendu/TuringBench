@@ -1,0 +1,5 @@
+PYTHONPATH=$(pwd) python sources/Grover/sample/contextual_generate.py \
+-model_config_fn sources/Grover/lm/configs/mega.json \
+-model_ckpt models/mega/model.ckpt \
+-metadata_fn ../data/conv_data.json \
+-out_fn ../generations/grover.json
