@@ -1,0 +1,489 @@
+<!DOCTYPE html><!--Author: Pranav Rajpurkar 2016--><html>
+    <head>
+        <meta charset="utf-8">
+        <title>TuringBench: The Turing Test Benchmark Environment</title>
+        <meta name="description" content="Stanford Question Answering Dataset (SQuAD) is a new reading comprehension dataset, consisting of questions posed by crowdworkers on a set of Wikipedia articles, where the answer to every question is a segment of text, or span, from the corresponding reading passage. With 100,000+ question-answer pairs on 500+ articles, SQuAD is significantly larger than previous reading comprehension datasets.">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta property="og:image" content="/logo.png">
+        <link rel="image_src" type="image/png" href="logo.png">
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+        <link rel="icon" href="favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="stylesheets/layout.css">
+        <link rel="stylesheet" href="stylesheets/index.css">
+        <script async defer src="https://buttons.github.io/buttons.js"></script>
+        <script src="javascripts/analytics.js"></script>
+    </head>
+    
+    <body>
+        <div class="navbar navbar-default navbar-fixed-top" id="topNavbar" role="navigation">
+            <div class="container clearfix" id="navContainer">
+                <div class="rightNav"><div class="collapseDiv">
+                    <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="glyphicon glyphicon-menu-hamburger"></span>
+                    </button></div><div class="collapse navbar-collapse" id="navbar">
+                    <ul class="nav navbar-nav navbar-right"><li>
+                        <a href="#">Home</a></li>
+<!--                        <li><a href="explore/v2.0/dev/">Explore 2.0</a></li>-->
+                        </ul></div></div>
+                <div class="leftNav">
+                <div class="brandDiv">
+                    <a class="navbar-brand" href="/SQuAD-explorer/">TuringBench</a>
+                </div></div></div></div>
+        
+        <div class="cover" id="topCover"><div class="container">
+        <div class="row">
+        <div class="col-md-12">
+        <h1 id="appTitle">TuringBench</h1>
+        <h2 id="appSubtitle">The Turing Test Benchmark Environment</h2>
+        </div></div></div></div>
+        
+        <div class="cover" id="contentCover"><div class="container"><div class="row">
+            <div class="col-md-5"><div class="infoCard">
+                <div class="infoBody">
+                <div class="infoHeadline">
+                    <h2>What is TuringBench?</h2></div>
+                <p> <span><b>TuringBench</b> is a benchmark environment that contains
+                    </span>:
+                    <ol type = "1">
+                         <li>Benchmark tasks- Turing Test (i.e., human vs. machine) and Authorship Attribution: (i.e., who is the author of this texts?) </li>
+                        
+                         <li>Datasets (Binary and Multi-class settings)</li>
+                         <li>Website with leaderboard </li>
+                      </ol>
+                    The dataset has 20 labels (19 AI text-generators and human). We built this dataset by collecting 10K news articles (mostly Politics) from sources like CNN and only keeping articles with 200-400 words. Next, we used the Titles of these human-written articles to prompt the AI text-generators (ex: GPT-2, GROVER, etc.) to generate 10K articles each. This gives us a sum total of 200K articles and 20 labels. However, since there are two benchmark tasks - Turing Test and Authorship Attribution settings, we have all 20 labels in one dataset for the multi-class setting and only human vs. one AI text-generator, making 19 binary-class datasets. 
+<!--                    These datasets will be hosted on huggingfaces' datahub: ADD LINK HERE.-->
+                </p>
+            
+<!--
+            <hr>
+                <p>
+                <b> TuringBench</b> has two tasks: <ol type = "1">
+                 <li>Turing Test (i.e., human vs. machine) </li>
+                 <li>Authorship Attribution: (i.e., who is the author of this texts?) </li></ol>
+                  There are other application domains this dataset can be applied to but we will focus on only these two tasks for now. 
+                </p>
+                <a class="btn actionBtn" href="explore/v2.0/dev/">Explore SQuAD2.0 and model predictions</a>
+                <a class="btn actionBtn" href="http://pike.psu.edu/publications/emnlp20.pdf">TuringBench related paper (Uchendu et al. '20)</a></hr>
+-->
+                
+        <div class="infoHeadline"><h2>How to get the Dataset</h2></div>
+                <pre><code class="python">
+                from datasets import load_dataset
+                import pandas as pd 
+                
+                # AA
+                train = load_dataset('turingbench/TuringBench', name='AA', split='train') 
+                train = pd.DataFrame.from_dict(train)
+
+                test = load_dataset('turingbench/TuringBench', name='AA', split='test')
+                test = pd.DataFrame.from_dict(test)
+
+                valid = load_dataset('turingbench/TuringBench', name='AA', split='validation')
+                valid = pd.DataFrame.from_dict(valid)
+                
+                # GPT-1 TT task
+                TT_gpt1 = load_dataset('turingbench/TuringBench', name='TT_gpt1', split='train')
+                TT_gpt1 = pd.DataFrame.from_dict(TT_gpt1)
+                </code></pre>
+        
+        <div class="infoHeadline"><h2>Getting Started</h2></div>
+                <p>We've built a few resources to help you get started with the dataset.</p>
+                <p> These datasets will be hosted on huggingfaces' datahub: 
+                    <a href="https://huggingface.co/datasets/turingbench/TuringBench/tree/main">data repo</a>
+                     </p>
+<!--
+            <p>
+            Download a copy of the dataset (distributed under the  
+            <a href="http://creativecommons.org/licenses/by-sa/4.0/legalcode">CC BY-SA 4.0</a> license):<ul class="list-unstyled"><li><a class="btn actionBtn inverseBtn" href="dataset/train-v2.0.json" download>Training Set v2.0 (40 MB)</a></li><li><a class="btn actionBtn inverseBtn" href="dataset/dev-v2.0.json" download>Dev Set v2.0 (4 MB)</a></li></ul>
+                </p>
+-->
+<!--
+        <p>To evaluate your models, we have also made available the evaluation script we will use for official evaluation, along with a sample prediction file that the script will take as input. To run the evaluation, use 
+            <code>python evaluate-v2.0.py &lt;path_to_dev-v2.0&gt; &lt;path_to_predictions&gt;</code>.
+        <ul class="list-unstyled"><li><a class="btn actionBtn inverseBtn" href="https://worksheets.codalab.org/rest/bundles/0x6b567e1cf2e041ec80d7098f031c5c9e/contents/blob/" download>Evaluation Script v2.0</a></li><li><a class="btn actionBtn inverseBtn" href="https://worksheets.codalab.org/bundles/0x8731effab84f41b7b874a070e40f61e2/" download>Sample Prediction File (on Dev v2.0)</a></li></ul></p>
+-->
+        <p>We ask contributors to submit their code and/or model weights at turingbench@gmail.com so we can run the model on the test set to preserve the integrity of the results.</p>
+<!--        <a class="btn actionBtn inverseBtn" href="https://worksheets.codalab.org/worksheets/0x8212d84ca41c4150b555a075b19ccc05/">Submission Tutorial</a>-->
+        <p>Because <b>TuringBench</b> is an ongoing effort, we expect the dataset to increase.</p>
+        <p>To keep up to date with major changes to the dataset, please subscribe:</p>
+        
+        <div id="mc_embed_signup"><form class="validate" id="mc-embedded-subscribe-form" action="//google.us13.list-manage.com/subscribe/post?u=1842e6560d6e10316b4e1aaf5&amp;id=76586bdcf4" method="post" name="mc-embedded-subscribe-form" target="_blank" novalidate=""><div id="mc_embed_signup_scroll"><input class="email" id="mce-EMAIL" type="email" value="" name="EMAIL" placeholder="email address" required="">
+            <div style="position: absolute; left: -5000px;" aria-hidden="true">
+                <input type="text" name="b_1842e6560d6e10316b4e1aaf5_76586bdcf4" tabindex="-1" value="">
+            </div><div class="clear"><input class="button" id="mc-embedded-subscribe" type="submit" value="Subscribe" name="subscribe"></div></div></form></div>
+            <div class="infoHeadline"><h2>Have Questions?</h2></div><p> Ask us questions at our emails  
+<!--            <a href="mailto:azu5030@psu.edu">azu5030@psu.edu</a> and -->
+            <a href="mailto:tql3@psu.edu">turingbench@gmail.com</a>.</p>
+            </div>
+            <div class="infoSubheadline">
+<!--
+            <a href="https://twitter.com/share" class="twitter-share-button" data-url="https://stanford-qa.com" data-text="The Stanford Question Answering Dataset - 100,000+ questions for reading comprehension" data-via="stanfordnlp" data-size="large" data-hashtags="SQuAD">Tweet</a> 
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+-->
+            <!-- Place this tag where you want the button to render. -->
+            <a class="github-button" href="https://github.com/AdaUchendu/TuringBench" data-icon="octicon-star" data-style="mega" data-count-href="/rajpurkar/SQuAD-explorer/stargazers" data-count-api="/repos/rajpurkar/SQuAD-explorer#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star rajpurkar/SQuAD-explorer on GitHub">Star</a>
+            </div></div></div>
+        
+             <div class="col-md-7"><div class="infoCard"><div class="infoBody"><div class="infoHeadline"><h2>Leaderboard: Authorship Attribution</h2></div><p>
+            The <b>TuringBench</b> Datasets will assist researchers in building robust Machine learning and Deep learning models that can effectively distinguish machine-generated texts from human-written texts. This Leaderboard is for the Authorship Attribution scenario.</p>
+            <table class="table performanceTable">
+                <tr><th>Rank</th>
+                    <th>Model</th>
+                    <th>Precision</th>
+                    <th>Recall</th>
+                    <th>F1</th>
+                    <th>Accuracy</th>
+                </tr>
+                
+<!--
+                <tr class="human-row"><td></td>
+                <td>Embedding</td>
+                <th>1</th>
+                <td>0.6798</td>
+                    <td>0.6947</td>
+                    <td>0.6772</td>
+                    <td>0.6959</td>
+                </tr>
+-->
+                
+               
+                
+                  
+                <tr><td> 
+                <p>1</p>
+                <span class="date label label-default">May 5, 2021</span></td>
+                    <td style="word-break:break-word;">RoBERTa<br>
+                    <a href="https://arxiv.org/pdf/1907.11692.pdf">(Liu et al., '19)</a>
+                    </td>
+                   <td>0.8214</td>
+                    <td>0.8126</td>
+                    <td>0.8107</td>
+                    <td>0.8173</td>  
+                 </tr>
+                
+                
+                <tr><td> 
+                <p>2</p>
+                <span class="date label label-default">May 5, 2021</span></td>
+                    <td style="word-break:break-word;">BERT<br>
+                    <a href="https://arxiv.org/pdf/1810.04805.pdf">(Devlin et al., '18)</a>
+                    </td>
+                    <td>0.8031</td>
+                    <td>0.8021</td>
+                    <td>0.7996</td>
+                    <td>0.8078</td>   
+                 </tr>
+                
+                
+                <tr><td> 
+                <p>3</p>
+                <span class="date label label-default">May 5, 2021</span></td>
+                    <td style="word-break:break-word;">BertAA<br>
+                    <a href="http://publications.idiap.ch/downloads/papers/2020/Fabien_ICON2020_2020.pdf">(Fabien et al., '20)</a>
+                    </td>
+                    <td>0.7796</td>
+                    <td>0.7750</td>
+                    <td>0.7758</td>
+                    <td>0.7812</td>    
+                 </tr>
+                
+                
+                <tr><td>
+                <p>4</p>
+                <span class="date label label-default">May 5, 2021</span></td>
+                <td style="word-break:break-word;">OpenAI detector<br>
+<!--                <a href="https://arxiv.org/pdf/1810.04805.pdf">(Devlin, '18)</a>-->
+                </td>
+                    <td>0.7810</td>
+                    <td>0.7812</td>
+                    <td>0.7741</td>
+                    <td>0.7873</td>
+                </tr>
+                
+                
+                
+                
+                <tr><td>
+                    <p>5</p>
+                    <span class="date label label-default">May 5, 2021</span>
+                    </td>
+                <td style="word-break:break-word;">SVM (3-grams)<br>
+                    <a href="https://www.aclweb.org/anthology/N15-1010.pdf">(Sapkota et al. '15)</a>
+                     </td>
+                    <td>0.7124</td>
+                    <td>0.7223</td>
+                    <td>0.7149</td>
+                    <td>0.7299</td>    
+                 </tr>
+                
+                
+                
+                
+                <tr><td>
+                    <p>6</p>
+                    <span class="date label label-default">May 5, 2021</span>
+                    </td>
+                <td style="word-break:break-word;">N-gram CNN<br>
+                <a href="https://www.aclweb.org/anthology/E17-2106.pdf">(Shreshta et al., '17)</a>
+                     </td>
+                    <td>0.6909</td>
+                    <td>0.6832</td>
+                    <td>0.6665</td>
+                    <td>0.6914</td>
+                </tr>
+                
+                
+                
+                <tr><td>
+                    <p>7</p>
+                    <span class="date label label-default">May 5, 2021</span></td>
+                <td style="word-break:break-word;">N-gram LSTM-LSTM<br>
+                <a href="https://arxiv.org/pdf/1902.09723.pdf">(Jafariakinabad, '19)</a>
+                </td>
+                    <td>0.6694</td>
+                    <td>0.6824</td>
+                    <td>0.6646</td>
+                    <td>0.6898</td>
+                </tr>
+                
+                
+                <tr><td>
+                    <p>8</p>
+                    <span class="date label label-default">May 5, 2021</span>
+                    </td>
+                <td style="word-break:break-word;">Syntax-CNN<br>
+                    <a href="https://www.aclweb.org/anthology/D18-1294.pdf">(Zhang et al. '18)</a>
+                     </td>
+                    <td>0.6520</td>
+                    <td>0.6544</td>
+                    <td>0.6480</td>
+                    <td>0.6613</td>    
+                 </tr>
+                
+                
+                
+                <tr><td>
+                    <p>9</p>
+                    <span class="date label label-default">May 5, 2021</span>
+                    </td>
+                <td style="word-break:break-word;">Random Forest</td>
+                <td>0.5893</td>
+                    <td>0.6053</td>
+                    <td>0.5847</td>
+                    <td>0.6147</td>
+                </tr>
+                
+                
+                
+                <tr><td>
+                    <p>10</p>
+                    <span class="date label label-default">May 5, 2021</span>
+                    </td>
+                <td style="word-break:break-word;">WriteprintsRFC<br>
+                    <a href="https://petsymposium.org/2019/files/papers/issue4/popets-2019-0058.pdf">(Mahmood et al. '19)</a>
+                     </td>
+                    <td>0.4578</td>
+                    <td>0.4851</td>
+                    <td>0.4651</td>
+                    <td>0.4943</td>    
+                 </tr>
+                
+                
+                
+              
+                 </table>
+                 </div></div></div>
+        
+            
+        
+        <div class="col-md-7"><div class="infoCard"><div class="infoBody"><div class="infoHeadline"><h2>Leaderboard: Turing Test</div><p>
+            The <b>TuringBench</b> Datasets will assist researchers in building robust Machine learning and Deep learning models that can effectively distinguish machine-generated texts from human-written. This Leaderboard is for the Turing Test scenario.</p>
+            <table class="table performanceTable">
+                <tr><th>GENERATOR</th>
+<!--
+                    <th>Model</th>
+                    <th>F1</th>
+-->
+                </tr>
+                
+<!--
+                <tr class="human-row"><td></td>
+                <td>Human Performance
+                    <p class="institution">Stanford University</p>
+                    <a href="http://arxiv.org/abs/1606.05250">(Rajpurkar & Jia et al. '18)</a>
+                    </td>
+                    <th>1</th>
+                    <td>86.831</td>
+                    <td>89.452</td>
+                    <td>89.452</td>
+                    <td>89.452</td>
+                </tr>
+-->
+                
+<!--
+                <tr><td>
+                    <p>GPT-1</p>
+                    <td>GPT-1</td>
+             </tr>
+-->
+                  <tr>
+                      
+                <td style="word-break:break-word;"><a href="human.html">Human Test</a><br>
+<!--                <a href="https://arxiv.org/ftp/arxiv/papers/1604/1604.04573.pdf">(Wang et al. '16)</a>-->
+                     </td>
+                 </tr>
+                
+<!--
+                <tr>
+                <td style="word-break:break-word;">Human Test (human vs. Machine)<br>
+                <a href="https://arxiv.org/ftp/arxiv/papers/1604/1604.04573.pdf">(Wang et al. '16)</a>
+                     </td>
+                 </tr>
+-->
+                
+                <tr>
+                    <td style="word-break:break-word;"><a href="gpt1.html">GPT-1</a><br>                
+                        <a href="https://s3-us-west-2.amazonaws.com/openai-assets/research-covers/language-unsupervised/language_understanding_paper.pdf">(Radford et al. '18)</a>
+                     </td>
+                 </tr>
+                
+                <tr>
+                    <td style="word-break:break-word;"><a href="gpt2small.html">GPT-2 small</a><br>                
+                <a href="https://d4mucfpksywv.cloudfront.net/better-language-models/language_
+                         models_are_unsupervised_multitask_learners.pdf">(Radford et al. '19)</a>                     
+                    </td>
+                 </tr>
+                
+                
+                <tr>
+                    <td style="word-break:break-word;"><a href="gpt2med.html">GPT-2 medium</a><br>                
+                    <a href="https://d4mucfpksywv.cloudfront.net/better-language-models/language_
+                         models_are_unsupervised_multitask_learners.pdf">(Radford et al. '19)</a>                      
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td style="word-break:break-word;"><a href="gpt2large.html">GPT-2 large</a><br>                
+                    <a href="https://d4mucfpksywv.cloudfront.net/better-language-models/language_
+                         models_are_unsupervised_multitask_learners.pdf">(Radford et al. '19)</a>                      
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td style="word-break:break-word;"><a href="gpt2xl.html">GPT-2 xl</a><br>                
+                    <a href="https://d4mucfpksywv.cloudfront.net/better-language-models/language_
+                         models_are_unsupervised_multitask_learners.pdf">(Radford et al. '19)</a>                      
+                    </td>
+                 </tr>
+                
+                <tr>
+                    <td style="word-break:break-word;"><a href="gpt2py.html">GPT-2 PyTorch</a><br>                
+                <a href="https://github.com/graykode/gpt-2-Pytorch">(Graykode. '19)</a>
+                     </td>
+                 </tr>
+                
+                <tr>
+                    <td style="word-break:break-word;"><a href="gpt3.html">GPT-3</a><br>                
+                <a href="https://arxiv.org/pdf/2005.14165.pdf">(Brown et al. '20)</a>
+                     </td>
+                </tr>
+                
+                <tr>
+                    <td style="word-break:break-word;"><a href="groverbase.html">GROVER base</a><br>                
+                <a href="https://arxiv.org/pdf/1905.12616.pdf">(Zellers et al. '19)</a>
+                     </td>
+                </tr>
+                
+                <tr>
+                    <td style="word-break:break-word;"><a href="groverlarge.html">GROVER large</a><br>                
+                <a href="https://arxiv.org/pdf/1905.12616.pdf">(Zellers et al. '19)</a>
+                     </td>
+                </tr>
+                
+                <tr>
+                    <td style="word-break:break-word;"><a href="grovermega.html">GROVER mega</a><br>                
+                <a href="https://arxiv.org/pdf/1905.12616.pdf">(Zellers et al. '19)</a>
+                     </td>
+                </tr>
+                
+                <tr>
+                    <td style="word-break:break-word;"><a href="ctrl.html">CTRL</a><br>                
+                <a href="https://arxiv.org/pdf/1909.05858.pdf">(Keskar et al. '19)</a>
+                     </td>
+                </tr>
+                
+                <tr>
+                    <td style="word-break:break-word;"><a href="xlm.html">XLM</a><br>                
+                <a href="https://arxiv.org/pdf/1901.07291.pdf">(Lample et al. '19)</a>
+                     </td>
+                </tr>
+                
+                <tr>
+                    <td style="word-break:break-word;"><a href="xlnetbase.html">XLNET base</a><br>                
+                <a href="https://arxiv.org/pdf/1906.08237.pdf">(Zhilin et al. '19)</a>
+                     </td>
+                </tr>
+                
+                <tr>
+                    <td style="word-break:break-word;"><a href="xlnetlarge.html">XLNET large</a><br>                
+                <a href="https://arxiv.org/pdf/1906.08237.pdf">(Zhilin et al. '19)</a>
+                     </td>
+                </tr>
+                
+                <tr>
+                    <td style="word-break:break-word;"><a href="fair19.html">FAIR wmt19</a><br>                
+                <a href="https://arxiv.org/pdf/1907.06616.pdf">(Ng et al. '19)</a>
+                     </td>
+                </tr>
+                
+                <tr>
+                    <td style="word-break:break-word;"><a href="fair20.html">FAIR wmt20</a><br>                
+                <a href="https://arxiv.org/pdf/2011.08298.pdf">(Chen et al. '20)</a>
+                     </td>
+                </tr>
+                
+                <tr>
+                    <td style="word-break:break-word;"><a href="transform.html">TRANSFORMER-XL</a><br>                
+                <a href="https://arxiv.org/pdf/1901.02860.pdf">(Dia et al. '19)</a>
+                     </td>
+                </tr>
+                
+                <tr>
+                    <td style="word-break:break-word;"><a href="pplmdistil.html">PPLM distil</a><br>                
+                <a href="https://arxiv.org/pdf/1912.02164.pdf">(Dathathri et al. '20)</a>
+                     </td>
+                </tr>
+                
+                <tr>
+                    <td style="word-break:break-word;"><a href="pplmgpt2.html">PPLM gpt2</a><br>                
+                <a href="https://arxiv.org/pdf/1912.02164.pdf">(Dathathri et al. '20)</a>
+                     </td>
+                </tr>
+                
+            
+            </table></div></div></div>
+        
+            
+            
+       
+    </div></div></div>            
+            
+            
+            <nav class="navbar navbar-default navbar-static-bottom footer">
+                <div class="container clearfix">
+                    <div class="rightNav">
+                        <div>
+                        <ul class="nav navbar-nav navbar-right">
+                        <li><a href="index.html">TuringBench</a></li>
+                        <li><a href="http://pike.psu.edu/">The PIKE Group</a></li>
+                        </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <script src="bower_components/jquery/dist/jquery.min.js"></script>
+            <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        </body>
+    </html>
